@@ -1,0 +1,21 @@
+2) Preferences 
+	- color
+3) Outline tree to move to text position - fix highlight bug
+    - outline images - finish
+4) Refactor code
+5) JavaDoc
+6) Unit tests
+7) Build Scripts
+
+9) File icon image
+10) Folding text
+	http://www.eclipse.org/articles/Article-Folding-in-Eclipse-Text-Editors/folding.html
+
+11) Refactor text formatter
+	http://www.realsolve.co.uk/site/tech/jface-text.php
+
+
+Future work
+8) Outline edit values - nice to have - not possible in outline
+3)    - text in editor highlights in outline - no sure can be done.
+9) Read up on doc positions. Maybe positions can generate tree structure
