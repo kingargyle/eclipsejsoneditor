@@ -7,7 +7,7 @@
       <editor
             name="Json Editor"
             extensions="json"
-            icon="icons/sample.gif"
+            icon="icons/JsonFile.gif"
             contributorClass="json.editors.JsonPageEditorContributor"
             class="json.editors.JsonPageEditor"
             id="json.editors.JsonPageEditor">
