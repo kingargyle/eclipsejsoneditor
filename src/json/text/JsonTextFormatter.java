@@ -140,7 +140,7 @@ public class JsonTextFormatter {
 				i++;
 			}
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Bad Location");
+
 		}
 
 		return doc.toString();

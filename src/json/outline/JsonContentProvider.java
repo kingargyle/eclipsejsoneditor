@@ -111,7 +111,6 @@ public class JsonContentProvider implements ITreeContentProvider {
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		
-		System.out.println("Input changed");
 		if (oldInput != null) {
 			IDocument document= fDocumentProvider.getDocument(oldInput);
 			if (document != null) {

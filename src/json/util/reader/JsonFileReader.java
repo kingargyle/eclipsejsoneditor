@@ -89,7 +89,6 @@ public class JsonFileReader implements JsonReader {
 		try {
 			position++;
 			char ch = (char) reader.read();
-			System.out.print(ch);
 			return ch;
 		} catch (IOException e) {
 			throw new JsonReaderException();
