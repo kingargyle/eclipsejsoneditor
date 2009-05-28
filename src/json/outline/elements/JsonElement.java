@@ -19,6 +19,8 @@ public abstract class JsonElement {
 	
 	private int length;
 	
+	private boolean textSelection;
+	
 	public JsonElement(JsonParent parent) {
 		this.parent = parent;
 	}
@@ -64,4 +66,21 @@ public abstract class JsonElement {
 		this.start = start;
 		this.length = length;
 	}
+	
+	/**
+	 * Returns true if the JsonElement was selected from a text event.
+	 * @return
+	 */
+	public boolean isTextSelection() {
+		return textSelection;
+	}
+	
+	/**
+	 * Set to true if the JsonElement is about to fire a notification event.
+	 * @param textSelection
+	 */
+	public void setTextSelection(boolean textSelection) {
+		this.textSelection = textSelection;
+	}
+	
 }

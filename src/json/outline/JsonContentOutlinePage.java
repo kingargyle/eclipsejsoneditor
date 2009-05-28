@@ -11,6 +11,8 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -84,6 +86,11 @@ public class JsonContentOutlinePage extends ContentOutlinePage implements ISelec
 			fTextEditor.resetHighlightRange();
 		else {
 			JsonElement jsonElement = (JsonElement) ((IStructuredSelection) selection).getFirstElement();
+			if (jsonElement.isTextSelection()) {
+				jsonElement.setTextSelection(false);
+				return;
+			}
+			
 			int start= jsonElement.getStart();
 			int length= jsonElement.getLength();
 			try {
@@ -136,7 +143,10 @@ public class JsonContentOutlinePage extends ContentOutlinePage implements ISelec
 			
 			JsonElement element = fContentProvider.findNearestElement(start, length);
 			if (element != null) {
+				element.setTextSelection(true);
 				getTreeViewer().reveal(element);
+				TreeSelection treeSelection = new TreeSelection(new TreePath(new Object[]{element}));
+				getTreeViewer().setSelection(treeSelection);
 			}
 		}
 		
