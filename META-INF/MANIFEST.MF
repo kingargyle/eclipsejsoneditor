@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Json Plug-in
-Bundle-SymbolicName: Json; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Name: Json Editor Plugin
+Bundle-SymbolicName: json.editor.plugin;singleton:=true
+Bundle-Version: 0.9.1
 Bundle-Activator: json.JsonEditorPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.views
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Matt Garner
