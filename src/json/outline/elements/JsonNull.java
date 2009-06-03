@@ -47,7 +47,7 @@ public class JsonNull extends JsonEntry {
 		if (getKey() != null && !"".equals(getKey())) {
 			StyledString.Styler style1 = StyledString.createColorRegistryStyler("GREEN", "WHITE");
 			styledString.append(getKey(), style1);
-			StyledString.Styler style2 = StyledString.createColorRegistryStyler("BLACK", "WHITE");
+			StyledString.Styler style2 = StyledString.createColorRegistryStyler("RED", "WHITE");
 			styledString.append(" : ", style2);
 		}
 		StyledString.Styler style3 = StyledString.createColorRegistryStyler(this.getForegroundColor(), "WHITE");

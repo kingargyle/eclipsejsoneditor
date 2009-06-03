@@ -116,7 +116,7 @@ public class JsonTextOutlineParser {
 			parent = jsonObject;
 		}
 		
-		jsonObject.setPosition(startPos, parser.getPosition() - startPos );
+		jsonObject.setPosition(startPos, parser.getPosition() - startPos + 1);
 		
 		while (true) {
 			char ch = parser.getNextClean();
@@ -197,7 +197,7 @@ public class JsonTextOutlineParser {
 		JsonArray jsonArray = new JsonArray(parent, key);
 		parent.addChild(jsonArray);
 		parent = jsonArray;
-		jsonArray.setPosition(startPos, parser.getPosition() - startPos);
+		jsonArray.setPosition(startPos, parser.getPosition() - startPos + 1);
 		
 		while (true) {
 			char ch = parser.getNextClean();
@@ -278,7 +278,7 @@ public class JsonTextOutlineParser {
 			throw new JsonTextOutlineParserException();
 		}
 		
-		jsonBoolean.setLength(parser.getPosition() - start);
+		jsonBoolean.setLength(parser.getPosition() - start + 1);
 		
 		ch = parser.getNextClean();
 		if (isNotClosed(ch)) {
@@ -331,7 +331,7 @@ public class JsonTextOutlineParser {
 			throw new JsonTextOutlineParserException();
 		}
 		
-		jsonBoolean.setLength(parser.getPosition() - start);
+		jsonBoolean.setLength(parser.getPosition() - start + 1);
 		ch = parser.getNextClean();
 		if (isNotClosed(ch)) {
 			JsonError jsonError = new JsonError(parent, "Expected end value");
@@ -376,7 +376,7 @@ public class JsonTextOutlineParser {
 			parent.addChild(jsonError);
 			throw new JsonTextOutlineParserException();
 		}
-		jsonNull.setLength(parser.getPosition() - start);
+		jsonNull.setLength(parser.getPosition() - start + 1);
 		
 		ch = parser.getNextClean();
 		if (isNotClosed(ch)) {
@@ -413,7 +413,7 @@ public class JsonTextOutlineParser {
 				valueBuilder.append(ch);
 				continue;
 			}
-			jsonString.setLength(parser.getPosition() - start);
+			jsonString.setLength(parser.getPosition() - start + 1);
 			ch = parser.getNextClean();
 			break;
 		}
