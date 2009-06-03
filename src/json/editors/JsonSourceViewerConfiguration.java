@@ -1,10 +1,13 @@
 package json.editors;
 
 import json.JsonEditorPlugin;
+import json.text.JsonReconcilingStrategy;
 
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.jface.text.reconciler.IReconciler;
+import org.eclipse.jface.text.reconciler.MonoReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -17,6 +20,13 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
  */
 public class JsonSourceViewerConfiguration extends SourceViewerConfiguration {
 	
+	private JsonTextEditor textEditor;
+	
+	public JsonSourceViewerConfiguration(JsonTextEditor textEditor) {
+		super();
+		this.textEditor = textEditor;
+	}
+
 	/* (non-Javadoc)
 	 * Method declared on SourceViewerConfiguration
 	 */
@@ -30,4 +40,17 @@ public class JsonSourceViewerConfiguration extends SourceViewerConfiguration {
 		
 		return reconciler;
 	}
+
+	@Override
+	public IReconciler getReconciler(ISourceViewer sourceViewer) {
+		
+		JsonReconcilingStrategy strategy = new JsonReconcilingStrategy();
+		strategy.setTextEditor(textEditor);
+        
+        MonoReconciler reconciler = new MonoReconciler(strategy,false);
+        
+        return reconciler;
+	}
+	
+	
 }
