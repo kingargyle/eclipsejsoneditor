@@ -45,7 +45,6 @@ public class JsonContentProvider implements ITreeContentProvider {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
 	 */
-	@Override
 	public Object[] getChildren(Object parentElement) {
 		if (parentElement == fInput) {
 			return (rootObject != null) ? new Object[]{ rootObject } : new Object[0];
@@ -59,7 +58,6 @@ public class JsonContentProvider implements ITreeContentProvider {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object)
 	 */
-	@Override
 	public Object getParent(Object element) {
 		if (element == rootObject)
 			return fInput;
@@ -72,7 +70,6 @@ public class JsonContentProvider implements ITreeContentProvider {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.Object)
 	 */
-	@Override
 	public boolean hasChildren(Object element) {
 		if (element == fInput) {
 			return (rootObject != null) ? true : false;
@@ -87,7 +84,6 @@ public class JsonContentProvider implements ITreeContentProvider {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
 	 */
-	@Override
 	public Object[] getElements(Object inputElement) {
 		if (inputElement == fInput) {
 			return (rootObject != null) ? new Object[]{ rootObject } : new Object[0];
@@ -98,7 +94,6 @@ public class JsonContentProvider implements ITreeContentProvider {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
-	@Override
 	public void dispose() {
 		if (rootObject != null) {
 			rootObject = null;
@@ -108,7 +103,6 @@ public class JsonContentProvider implements ITreeContentProvider {
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
 	 */
-	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		
 		if (oldInput != null) {

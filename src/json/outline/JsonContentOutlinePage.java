@@ -133,7 +133,6 @@ public class JsonContentOutlinePage extends ContentOutlinePage implements ISelec
 	 * Moves the outline view to show the element where the cursor in the
 	 * text editor is placed.
 	 */
-	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		
 		if (selection instanceof ITextSelection) {

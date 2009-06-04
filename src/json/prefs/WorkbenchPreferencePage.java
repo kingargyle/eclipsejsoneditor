@@ -41,7 +41,6 @@ public class WorkbenchPreferencePage extends FieldEditorPreferencePage
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public void init(IWorkbench workbench) {
 		// TODO Auto-generated method stub
 		

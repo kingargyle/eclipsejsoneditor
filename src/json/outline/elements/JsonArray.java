@@ -35,7 +35,6 @@ public class JsonArray extends JsonElement implements JsonParent {
 		
 	}
 	
-	@Override
 	public boolean hasChildren() {
 		return !jsonElements.isEmpty();
 	}
@@ -56,7 +55,6 @@ public class JsonArray extends JsonElement implements JsonParent {
 		this.jsonElements = jsonElements;
 	}
 	
-	@Override
 	public void removeEntry(JsonElement jsonElement) {
 		this.jsonElements.remove(jsonElement);
 	}

@@ -34,12 +34,10 @@ public class JsonObject extends JsonElement implements JsonParent {
 		getParent().removeEntry(this);
 	}
 	
-	@Override
 	public void removeEntry(JsonElement jsonElement) {
 		this.values.remove(jsonElement);
 	}
 	
-	@Override
 	public boolean hasChildren() {
 		return !values.isEmpty();
 	}

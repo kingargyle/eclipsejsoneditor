@@ -56,7 +56,6 @@ public class JsonLabelProvider extends ColumnLabelProvider  implements IStyledLa
 	/**
 	 * Returns the styled text contained in the tree element.
 	 */
-	@Override
 	public StyledString getStyledText(Object element) {
 		StyledString styledString = new StyledString();
 		if (element instanceof JsonElement) {

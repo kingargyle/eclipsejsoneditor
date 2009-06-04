@@ -32,7 +32,6 @@ public class JsonDocReader implements JsonReader {
 	/* (non-Javadoc)
 	 * @see json.util.JsonReader#getCurrent()
 	 */
-	@Override
 	public char getCurrent() {
 		return current;
 	}
@@ -40,7 +39,6 @@ public class JsonDocReader implements JsonReader {
 	/* (non-Javadoc)
 	 * @see json.util.JsonReader#getNextChar()
 	 */
-	@Override
 	public char getNextChar() throws JsonReaderException {
 		char ch = next();
 		previous = current;
@@ -66,7 +64,6 @@ public class JsonDocReader implements JsonReader {
 	/* (non-Javadoc)
 	 * @see json.util.JsonReader#getNextClean()
 	 */
-	@Override
 	public char getNextClean() throws JsonReaderException {
 		
 		char ch = ' ';
@@ -81,7 +78,6 @@ public class JsonDocReader implements JsonReader {
 	/* (non-Javadoc)
 	 * @see json.util.JsonReader#getPosition()
 	 */
-	@Override
 	public int getPosition() {
 		return position - 1;
 	}
@@ -89,7 +85,6 @@ public class JsonDocReader implements JsonReader {
 	/* (non-Javadoc)
 	 * @see json.util.JsonReader#getPrevious()
 	 */
-	@Override
 	public char getPrevious() {
 		return previous;
 	}

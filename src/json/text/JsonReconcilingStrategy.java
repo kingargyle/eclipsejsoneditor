@@ -67,7 +67,6 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.text.reconciler.IReconcilingStrategy#reconcile(org.eclipse.jface.text.IRegion)
 	 */
-	@Override
 	public void reconcile(IRegion partition) {
 		initialReconcile();
 	}
@@ -75,7 +74,6 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.text.reconciler.IReconcilingStrategy#reconcile(org.eclipse.jface.text.reconciler.DirtyRegion, org.eclipse.jface.text.IRegion)
 	 */
-	@Override
 	public void reconcile(DirtyRegion dirtyRegion, IRegion subRegion) {
 		initialReconcile();
 	}
@@ -83,7 +81,6 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.text.reconciler.IReconcilingStrategy#setDocument(org.eclipse.jface.text.IDocument)
 	 */
-	@Override
 	public void setDocument(IDocument document) {
 		this.fDocument = document;
 	}
@@ -91,7 +88,6 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension#initialReconcile()
 	 */
-	@Override
 	public void initialReconcile() {
 		parser = new JsonDocReader(fDocument);		
 		parse();
@@ -475,7 +471,6 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension#setProgressMonitor(org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	@Override
 	public void setProgressMonitor(IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
 
