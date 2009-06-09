@@ -4,8 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import json.JsonEditorPlugin;
+import json.outline.JsonContentProvider;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.BadPositionCategoryException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.Position;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 
@@ -15,11 +20,9 @@ public abstract class JsonElement {
 	
 	private JsonParent parent;
 	
-	private int start;
-	
-	private int length;
-	
 	private boolean textSelection;
+	
+	private Position position;
 	
 	public JsonElement(JsonParent parent) {
 		this.parent = parent;
@@ -47,24 +50,31 @@ public abstract class JsonElement {
 	public abstract StyledString getStyledString();
 
 	public int getStart() {
-		return start;
+		if (!position.isDeleted) {
+			return position.getOffset();
+		}
+		return -1;
 	}
 
-	public void setStart(int start) {
-		this.start = start;
+	public void setStart(int start, IDocument doc) throws BadLocationException, BadPositionCategoryException {
+		position = new Position(start);
+		doc.addPosition(JsonContentProvider.JSON_ELEMENTS, position);
 	}
 
 	public int getLength() {
-		return length;
+		if (!position.isDeleted) {
+			return position.getLength();
+		}
+		return -1;
 	}
 
 	public void setLength(int length) {
-		this.length = length;
+		position.setLength(length);
 	}
 	
-	public void setPosition(int start, int length) {
-		this.start = start;
-		this.length = length;
+	public void setPosition(int start, int length, IDocument doc) throws BadLocationException, BadPositionCategoryException {
+		position = new Position(start, length);
+		doc.addPosition(JsonContentProvider.JSON_ELEMENTS, position);
 	}
 	
 	/**

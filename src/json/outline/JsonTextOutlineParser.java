@@ -23,7 +23,6 @@ import static json.util.JsonCharUtility.s;
 import static json.util.JsonCharUtility.slash;
 import static json.util.JsonCharUtility.t;
 import static json.util.JsonCharUtility.u;
-
 import json.JsonLog;
 import json.outline.elements.JsonArray;
 import json.outline.elements.JsonBoolean;
@@ -57,6 +56,8 @@ public class JsonTextOutlineParser {
 	
 	private JsonParent parent;
 	
+	private IDocument doc;
+	
 	/**
 	 * Constructor taking the document to parse.
 	 * 
@@ -65,6 +66,7 @@ public class JsonTextOutlineParser {
 	public JsonTextOutlineParser(IDocument doc) {
 		super();
 		parser = new JsonDocReader(doc);
+		this.doc = doc;
 	}
 	
 	/**
@@ -116,7 +118,7 @@ public class JsonTextOutlineParser {
 			parent = jsonObject;
 		}
 		
-		jsonObject.setPosition(startPos, parser.getPosition() - startPos + 1);
+		jsonObject.setPosition(startPos, parser.getPosition() - startPos + 1, doc);
 		
 		while (true) {
 			char ch = parser.getNextClean();
@@ -197,7 +199,7 @@ public class JsonTextOutlineParser {
 		JsonArray jsonArray = new JsonArray(parent, key);
 		parent.addChild(jsonArray);
 		parent = jsonArray;
-		jsonArray.setPosition(startPos, parser.getPosition() - startPos + 1);
+		jsonArray.setPosition(startPos, parser.getPosition() - startPos + 1, doc);
 		
 		while (true) {
 			char ch = parser.getNextClean();
@@ -251,11 +253,11 @@ public class JsonTextOutlineParser {
 	 * @throws JsonReaderException
 	 * @throws JsonTextOutlineParserException
 	 */
-	private void doJsonTrueValue(String key, int start) throws JsonReaderException, JsonTextOutlineParserException {
+	private void doJsonTrueValue(String key, int start) throws JsonReaderException, JsonTextOutlineParserException, BadLocationException, BadPositionCategoryException  {
 		
 		JsonBoolean jsonBoolean = new JsonBoolean(parent, key);
 		parent.addChild(jsonBoolean);
-		jsonBoolean.setStart(start);
+		jsonBoolean.setStart(start, doc);
 		
 		char ch = parser.getNextChar();
 		if (ch != r) {
@@ -297,11 +299,11 @@ public class JsonTextOutlineParser {
 	 * @throws JsonReaderException
 	 * @throws JsonTextOutlineParserException
 	 */
-	private void doJsonFalseValue(String key, int start) throws JsonReaderException, JsonTextOutlineParserException {
+	private void doJsonFalseValue(String key, int start) throws JsonReaderException, JsonTextOutlineParserException, BadLocationException, BadPositionCategoryException  {
 		
 		JsonBoolean jsonBoolean = new JsonBoolean(parent, key);
 		parent.addChild(jsonBoolean);
-		jsonBoolean.setStart(start);
+		jsonBoolean.setStart(start, doc);
 		
 		char ch = parser.getNextChar();
 		if (ch != a) {
@@ -350,11 +352,11 @@ public class JsonTextOutlineParser {
 	 * @throws JsonReaderException
 	 * @throws JsonTextOutlineParserException
 	 */
-	private void doJsonNull(String key, int start) throws JsonReaderException, JsonTextOutlineParserException {
+	private void doJsonNull(String key, int start) throws JsonReaderException, JsonTextOutlineParserException, BadLocationException, BadPositionCategoryException  {
 		
 		JsonNull jsonNull = new JsonNull(parent, key);
 		parent.addChild(jsonNull);
-		jsonNull.setStart(start);
+		jsonNull.setStart(start, doc);
 		
 		char ch = parser.getNextChar();
 		if (ch != u) {
@@ -397,11 +399,11 @@ public class JsonTextOutlineParser {
 	 * @throws JsonReaderException
 	 * @throws JsonTextOutlineParserException
 	 */
-	private void doJsonValue(String key, int start) throws JsonReaderException, JsonTextOutlineParserException {
+	private void doJsonValue(String key, int start) throws JsonReaderException, JsonTextOutlineParserException, BadLocationException, BadPositionCategoryException  {
 		
 		JsonString jsonString = new JsonString(parent, key);
 		parent.addChild(jsonString);
-		jsonString.setStart(start);
+		jsonString.setStart(start, doc);
 		
 		StringBuilder valueBuilder = new StringBuilder();
 		while (true) {
@@ -428,13 +430,13 @@ public class JsonTextOutlineParser {
 	 * @throws JsonReaderException
 	 * @throws JsonTextOutlineParserException
 	 */
-	private void doJsonNumber(String key, int start) throws JsonReaderException, JsonTextOutlineParserException {
+	private void doJsonNumber(String key, int start) throws JsonReaderException, JsonTextOutlineParserException, BadLocationException, BadPositionCategoryException {
 		
 		boolean decimalPointSet = false;
 		
 		JsonNumber jsonNumber = new JsonNumber(parent, key);
 		parent.addChild(jsonNumber);
-		jsonNumber.setStart(start);
+		jsonNumber.setStart(start, doc);
 		
 		StringBuilder numberBuilder = new StringBuilder();
 		numberBuilder.append(parser.getCurrent());
