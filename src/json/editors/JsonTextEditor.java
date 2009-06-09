@@ -160,4 +160,10 @@ public class JsonTextEditor extends TextEditor {
 		
 		oldAnnotations=annotations;
 	}
+
+	public JsonContentOutlinePage getFOutlinePage() {
+		return fOutlinePage;
+	}
+	
+	
 }

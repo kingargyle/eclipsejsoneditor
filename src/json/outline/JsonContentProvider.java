@@ -26,7 +26,7 @@ public class JsonContentProvider implements ITreeContentProvider {
 	protected IDocumentProvider fDocumentProvider;
 	protected Object fInput;
 	protected JsonObject rootObject;
-	protected final static String JSON_ELEMENTS = "__json_elements"; //$NON-NLS-1$
+	public final static String JSON_ELEMENTS = "__json_elements"; //$NON-NLS-1$
 	protected IPositionUpdater fPositionUpdater= new DefaultPositionUpdater(JSON_ELEMENTS);
 	
 	protected void parse(IDocument document) {
