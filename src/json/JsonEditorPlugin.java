@@ -32,8 +32,10 @@ public class JsonEditorPlugin extends AbstractUIPlugin {
 	// Color provider used by JsonScanner.
 	private JsonColorProvider fColorProvider;
 	
-	public static final String SPACES_FOR_TABS = "spaces_for_tabs";
-	public static final String NUM_SPACES = "num_spaces";
+	public static final String SPACES_FOR_TABS = "spaces_for_tabs"; //$NON-NLS-1$
+	public static final String NUM_SPACES = "num_spaces"; //$NON-NLS-1$
+	public final static String EDITOR_MATCHING_BRACKETS = "matchingBrackets"; //$NON-NLS-1$	
+	public final static String EDITOR_MATCHING_BRACKETS_COLOR =  "matchingBracketsColor"; //$NON-NLS-1$
 	
 
 	public JsonEditorPlugin() {
@@ -109,8 +111,11 @@ public class JsonEditorPlugin extends AbstractUIPlugin {
 	public static IPreferenceStore getJsonPreferenceStore() {
 		IPreferenceStore store =
 			getDefault().getPreferenceStore();
+		JsonColorProvider provider = getDefault().getColorProvider();
 		store.setDefault(SPACES_FOR_TABS, true);
 		store.setDefault(NUM_SPACES, 4);
+		store.setDefault(EDITOR_MATCHING_BRACKETS, true);
+		store.setDefault(EDITOR_MATCHING_BRACKETS_COLOR, provider.getColor(JsonColorProvider.STRING).toString());
 		return store;
 	}
 }

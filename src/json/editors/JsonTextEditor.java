@@ -3,12 +3,14 @@ package json.editors;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import json.JsonEditorPlugin;
 import json.outline.JsonContentOutlinePage;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.DefaultCharacterPairMatcher;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -19,6 +21,7 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 /**
@@ -31,6 +34,11 @@ public class JsonTextEditor extends TextEditor {
 	
 	private SourceViewerConfiguration viewerConfiguration;
 	
+	protected final static char[] PAIRS= { '{', '}', '[', ']' };
+	
+	private DefaultCharacterPairMatcher pairsMatcher = new DefaultCharacterPairMatcher(PAIRS);
+
+	
 	/** The outline page */
 	private JsonContentOutlinePage fOutlinePage;
 	
@@ -39,6 +47,14 @@ public class JsonTextEditor extends TextEditor {
 		
 	}
 	
+	@Override
+	protected void configureSourceViewerDecorationSupport(SourceViewerDecorationSupport support) {
+		support.setCharacterPairMatcher(pairsMatcher);
+		
+		support.setMatchingCharacterPainterPreferenceKeys(JsonEditorPlugin.EDITOR_MATCHING_BRACKETS, JsonEditorPlugin.EDITOR_MATCHING_BRACKETS_COLOR);
+		super.configureSourceViewerDecorationSupport(support);
+	}
+
 	protected void initializeEditor() {
 		super.initializeEditor();
 		setEditorContextMenuId("#JsonTextEditorContext"); //$NON-NLS-1$
@@ -50,6 +66,12 @@ public class JsonTextEditor extends TextEditor {
 	public void dispose() {
 		if (fOutlinePage != null)
 			fOutlinePage.setInput(null);
+		
+		if (pairsMatcher != null) {
+			pairsMatcher.dispose();
+			pairsMatcher = null;
+		}
+
 		super.dispose();
 	}
 	
@@ -127,6 +149,9 @@ public class JsonTextEditor extends TextEditor {
 		viewer.doOperation(ProjectionViewer.TOGGLE);
 		
 		annotationModel = viewer.getProjectionAnnotationModel();
+		
+		SourceViewerDecorationSupport support = getSourceViewerDecorationSupport(viewer);
+		support.install(JsonEditorPlugin.getJsonPreferenceStore());
 	}
 
 	@Override
@@ -137,7 +162,6 @@ public class JsonTextEditor extends TextEditor {
 
 		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(viewer);
-
 		return viewer;
 	}
 	
@@ -164,6 +188,5 @@ public class JsonTextEditor extends TextEditor {
 	public JsonContentOutlinePage getFOutlinePage() {
 		return fOutlinePage;
 	}
-	
-	
+
 }
