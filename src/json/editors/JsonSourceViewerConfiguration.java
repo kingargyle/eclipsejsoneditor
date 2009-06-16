@@ -1,8 +1,10 @@
 package json.editors;
 
 import json.JsonEditorPlugin;
+import json.text.JsonIndentLineAutoEditStrategy;
 import json.text.JsonReconcilingStrategy;
 
+import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
@@ -52,5 +54,8 @@ public class JsonSourceViewerConfiguration extends SourceViewerConfiguration {
         return reconciler;
 	}
 	
-	
+	@Override
+	public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer, String contentType) {
+		return new IAutoEditStrategy[] { new JsonIndentLineAutoEditStrategy() };
+	}
 }
