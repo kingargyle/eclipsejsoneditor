@@ -109,7 +109,7 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 
 
 		} catch (Exception e) {
-			JsonLog.logError("Read exception: ", e);
+			//JsonLog.logError("Read exception: ", e);
 		}
 		
 		Display.getDefault().asyncExec(new Runnable() {
@@ -451,7 +451,7 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 		StringBuilder keyBuilder = new StringBuilder();
 		while (true) {
 			char ch = parser.getNextChar();
-			
+
 			if (ch == eof) {
 				
 				throw new JsonReconcilerParserException();
