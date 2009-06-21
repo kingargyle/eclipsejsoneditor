@@ -89,7 +89,7 @@ public class JsonTextValidator {
 
 
 		} catch (Exception e) {
-			JsonLog.logError("Read exception: ", e);
+		//	JsonLog.logError("Read exception: ", e);
 		}
 	}
 	
