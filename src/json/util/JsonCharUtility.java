@@ -27,7 +27,7 @@ public final class JsonCharUtility {
 	public static final char e = 'e';
 	public static final char t = 't';
 	public static final char r = 'r';
-	public static final int eof = -1;
+	public static final char eof = (char) -1;
 	public static final int space = ' ';
 	public static final int eol = '\n';
 	public static final int tab = '\t';
