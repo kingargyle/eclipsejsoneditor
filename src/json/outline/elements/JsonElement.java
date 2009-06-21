@@ -50,7 +50,7 @@ public abstract class JsonElement {
 	public abstract StyledString getStyledString();
 
 	public int getStart() {
-		if (!position.isDeleted) {
+		if (position != null && !position.isDeleted) {
 			return position.getOffset();
 		}
 		return -1;
@@ -62,7 +62,7 @@ public abstract class JsonElement {
 	}
 
 	public int getLength() {
-		if (!position.isDeleted) {
+		if (position != null && !position.isDeleted) {
 			return position.getLength();
 		}
 		return -1;

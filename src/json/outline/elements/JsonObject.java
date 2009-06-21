@@ -31,7 +31,9 @@ public class JsonObject extends JsonElement implements JsonParent {
 
 	@Override
 	public void removeFromParent() {
-		getParent().removeEntry(this);
+		if (getParent() != null) {
+			getParent().removeEntry(this);
+		}
 	}
 	
 	public void removeEntry(JsonElement jsonElement) {
