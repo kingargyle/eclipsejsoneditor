@@ -322,6 +322,10 @@ public class JsonTextValidator {
 			char ch = parser.getNextChar();
 			
 			// TODO check format in values as well.
+			if (ch == eof) {
+				reportProblem("Expected quotation", new Location(parser.getIFile(),"", parser.getPosition(), parser.getPosition()),0, true);
+				break;
+			}
 			
 			if (ch != quote) {
 				continue;
