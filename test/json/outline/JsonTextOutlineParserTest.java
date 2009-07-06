@@ -11,6 +11,8 @@ import org.junit.Test;
 
 public class JsonTextOutlineParserTest {
 	
+	public final static String JSON_ELEMENTS = "__json_elements"; //$NON-NLS-1$
+	
 	@Before
 	public void onSetup() {
 		
@@ -25,6 +27,7 @@ public class JsonTextOutlineParserTest {
 	public void testFile1() {
 		
 		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test1.json");
+		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
 		JsonObject top = jtop.parse();
@@ -40,6 +43,7 @@ public class JsonTextOutlineParserTest {
 	public void testFile2() {
 		
 		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test2.json");
+		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
 		JsonObject top = jtop.parse();
@@ -70,6 +74,7 @@ public class JsonTextOutlineParserTest {
 	public void testFile3() {
 		
 		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test3.json");
+		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
 		JsonObject top = jtop.parse();
@@ -102,6 +107,7 @@ public class JsonTextOutlineParserTest {
 	public void testFile4() {
 		
 		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test4.json");
+		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
 		JsonObject top = jtop.parse();
@@ -131,6 +137,19 @@ public class JsonTextOutlineParserTest {
 		JsonElement entries3 = meta.getChildren().get(3);
 		
 		Assert.assertEquals(4, entries3.getChildren().size());
+		
+	}
+	
+	@Test
+	public void testFile5() {
+		
+		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test5.json");
+		doc.addPositionCategory(JSON_ELEMENTS);
+		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
+		
+		JsonObject top = jtop.parse();
+		
+		Assert.assertEquals(1, top.getChildren().size());
 		
 	}
 }
