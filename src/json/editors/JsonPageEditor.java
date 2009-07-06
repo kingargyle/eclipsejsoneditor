@@ -110,8 +110,6 @@ public class JsonPageEditor extends MultiPageEditorPart implements IResourceChan
 	 */
 	public void init(IEditorSite site, IEditorInput editorInput)
 		throws PartInitException {
-		if (!(editorInput instanceof IFileEditorInput))
-			throw new PartInitException("Invalid Input: Must be IFileEditorInput");
 		super.init(site, editorInput);
 	}
 	/* (non-Javadoc)
