@@ -23,7 +23,6 @@ import static json.util.JsonCharUtility.s;
 import static json.util.JsonCharUtility.slash;
 import static json.util.JsonCharUtility.t;
 import static json.util.JsonCharUtility.u;
-import json.JsonLog;
 import json.outline.elements.JsonArray;
 import json.outline.elements.JsonBoolean;
 import json.outline.elements.JsonElement;
@@ -413,15 +412,15 @@ public class JsonTextOutlineParser {
 			ch = parser.getNextChar();
 			
 			// TODO check format in values as well.
-			
-			if (ch != quote || parser.getPrevious() == slash) {
-				valueBuilder.append(ch);
-				continue;
+			if (ch == eof || (ch == quote && parser.getPrevious() != slash)) {
+				jsonString.setLength(parser.getPosition() - start + 1);
+				ch = parser.getNextClean();
+				break;
 			}
-			jsonString.setLength(parser.getPosition() - start + 1);
-			ch = parser.getNextClean();
-			break;
+			
+			valueBuilder.append(ch);
 		} while (ch != eof);
+		
 		jsonString.setValue(valueBuilder.toString());
 	}
 	
