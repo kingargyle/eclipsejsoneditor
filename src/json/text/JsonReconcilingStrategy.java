@@ -111,12 +111,14 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 			//JsonLog.logError("Read exception: ", e);
 		}
 		
-		Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                    textEditor.updateFoldingStructure(fPositions);
-            }
+		if (textEditor != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					textEditor.updateFoldingStructure(fPositions);
+				}
 
-		});
+			});
+		}
 	}
 	
 	/**
