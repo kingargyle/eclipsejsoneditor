@@ -29,7 +29,6 @@ import static json.util.JsonCharUtility.u;
 
 import java.util.ArrayList;
 
-import json.JsonLog;
 import json.editors.JsonTextEditor;
 import json.util.reader.JsonDocReader;
 import json.util.reader.JsonReader;
@@ -135,8 +134,9 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 		Position position = new Position(startPos);
 		fPositions.add(position);
 		
-		while (true) {
-			char ch = parser.getNextClean();
+		char ch;
+		do {
+			ch = parser.getNextClean();
 			
 			// Check for empty object.
 			if (ch == closeCurly) {
@@ -192,7 +192,7 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 			
 			
 			throw new JsonReconcilerParserException();
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -210,8 +210,9 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 		Position position = new Position(startPos);
 		fPositions.add(position);
 		
-		while (true) {
-			char ch = parser.getNextClean();
+		char ch;
+		do {
+			ch = parser.getNextClean();
 			int start = parser.getPosition();
 			if (ch == openCurly) {
 				doJsonObject("", start);
@@ -249,7 +250,7 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 			
 			
 			throw new JsonReconcilerParserException();
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -376,8 +377,9 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 	 */
 	private void doJsonValue(String key, int start) throws JsonReaderException, JsonReconcilerParserException {
 		
-		while (true) {
-			char ch = parser.getNextChar();
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			
 			// TODO check format in values as well.
 			
@@ -387,7 +389,7 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 			}
 			ch = parser.getNextClean();
 			break;
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -402,8 +404,9 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 		
 		boolean decimalPointSet = false;
 		
-		while (true) {
-			char ch = parser.getNextChar();
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			
 			if (Character.isDigit(ch)) {
 
@@ -435,7 +438,7 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 			}
 			
 			break;
-		}
+		} while (ch != eof);
 		
 	}
 	
@@ -449,8 +452,9 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 	private String doJsonKey() throws JsonReaderException, JsonReconcilerParserException {
 
 		StringBuilder keyBuilder = new StringBuilder();
-		while (true) {
-			char ch = parser.getNextChar();
+		char ch;
+		do {
+			ch = parser.getNextChar();
 
 			if (ch == eof) {
 				
@@ -463,7 +467,7 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 			}
 			
 			break;
-		}
+		} while (ch != eof);
 		
 		return keyBuilder.toString();
 	}

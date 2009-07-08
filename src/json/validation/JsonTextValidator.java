@@ -101,8 +101,9 @@ public class JsonTextValidator {
 	 */
 	private void doJsonObject() throws JsonReaderException, JsonValidationException {
 		
-		while (true) {
-			char ch = parser.getNextClean();
+		char ch;
+		do {
+			ch = parser.getNextClean();
 			
 			// Check for empty object.
 			if (ch == closeCurly) {
@@ -154,7 +155,7 @@ public class JsonTextValidator {
 			
 			reportProblem("Unexpected object character:" + ch, new Location(parser.getIFile(),"", parser.getPosition(), parser.getPosition()),0, true);
 			throw new JsonValidationException();
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -165,8 +166,10 @@ public class JsonTextValidator {
 	 */
 	private void doJsonArray() throws JsonReaderException, JsonValidationException {
 		
-		while (true) {
-			char ch = parser.getNextClean();
+		char ch;
+		
+		do {
+			ch = parser.getNextClean();
 
 			if (ch == openCurly) {
 				doJsonObject();
@@ -202,7 +205,7 @@ public class JsonTextValidator {
 			
 			reportProblem("Unexpected array character:" + ch, new Location(parser.getIFile(),"", parser.getPosition(), parser.getPosition()),0, true);
 			throw new JsonValidationException();
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -318,8 +321,9 @@ public class JsonTextValidator {
 	 */
 	private void doJsonValue() throws JsonReaderException, JsonValidationException {
 		
-		while (true) {
-			char ch = parser.getNextChar();
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			
 			// TODO check format in values as well.
 			if (ch == eof) {
@@ -337,7 +341,7 @@ public class JsonTextValidator {
 			
 			ch = parser.getNextClean();
 			break;
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -349,8 +353,9 @@ public class JsonTextValidator {
 	private void doJsonNumber() throws JsonReaderException, JsonValidationException {
 		
 		boolean decimalPointSet = false;
-		while (true) {
-			char ch = parser.getNextChar();
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			if (Character.isDigit(ch)) {
 				continue;
 			}
@@ -376,7 +381,7 @@ public class JsonTextValidator {
 			}
 			
 			break;
-		}
+		} while (ch != eof);
 		
 	}
 	
@@ -387,9 +392,10 @@ public class JsonTextValidator {
 	 * @throws JsonValidationException
 	 */
 	private void doJsonKey() throws JsonReaderException, JsonValidationException {
-
-		while (true) {
-			char ch = parser.getNextChar();
+		
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			
 			if (ch == eof) {
 				reportProblem("Invalid JSON key, no closing \"", new Location(parser.getIFile(),"", parser.getPosition(), parser.getPosition()),0, true);
@@ -405,7 +411,7 @@ public class JsonTextValidator {
 			}
 			
 			break;
-		}
+		} while (ch != eof);
 	}
 	
 	/**

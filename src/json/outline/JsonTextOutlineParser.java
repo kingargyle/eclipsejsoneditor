@@ -91,7 +91,7 @@ public class JsonTextOutlineParser {
 
 
 		} catch (Exception e) {
-			JsonLog.logError("Read exception: ", e);
+			//JsonLog.logError("Read exception: ", e);
 		}
 		
 		return root;
@@ -120,8 +120,9 @@ public class JsonTextOutlineParser {
 		
 		jsonObject.setPosition(startPos, parser.getPosition() - startPos + 1, doc);
 		
-		while (true) {
-			char ch = parser.getNextClean();
+		char ch;
+		do {
+			ch = parser.getNextClean();
 			
 			// Check for empty object.
 			if (ch == closeCurly) {
@@ -181,7 +182,7 @@ public class JsonTextOutlineParser {
 			JsonError jsonError = new JsonError(parent, "Unexpected object character:" + ch);
 			parent.addChild(jsonError);
 			throw new JsonTextOutlineParserException();
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -201,8 +202,9 @@ public class JsonTextOutlineParser {
 		parent = jsonArray;
 		jsonArray.setPosition(startPos, parser.getPosition() - startPos + 1, doc);
 		
-		while (true) {
-			char ch = parser.getNextClean();
+		char ch;
+		do {
+			ch = parser.getNextClean();
 			int start = parser.getPosition();
 			if (ch == openCurly) {
 				doJsonObject("", start);
@@ -242,7 +244,7 @@ public class JsonTextOutlineParser {
 			JsonError jsonError = new JsonError(parent, "Unexpected array character:" + ch);
 			parent.addChild(jsonError);
 			throw new JsonTextOutlineParserException();
-		}
+		} while (ch != eof);
 	}
 	
 	/**
@@ -406,8 +408,9 @@ public class JsonTextOutlineParser {
 		jsonString.setStart(start, doc);
 		
 		StringBuilder valueBuilder = new StringBuilder();
-		while (true) {
-			char ch = parser.getNextChar();
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			
 			// TODO check format in values as well.
 			
@@ -418,7 +421,7 @@ public class JsonTextOutlineParser {
 			jsonString.setLength(parser.getPosition() - start + 1);
 			ch = parser.getNextClean();
 			break;
-		}
+		} while (ch != eof);
 		jsonString.setValue(valueBuilder.toString());
 	}
 	
@@ -440,8 +443,10 @@ public class JsonTextOutlineParser {
 		
 		StringBuilder numberBuilder = new StringBuilder();
 		numberBuilder.append(parser.getCurrent());
-		while (true) {
-			char ch = parser.getNextChar();
+		
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			
 			if (Character.isDigit(ch)) {
 				numberBuilder.append(ch);
@@ -475,7 +480,7 @@ public class JsonTextOutlineParser {
 			}
 			
 			break;
-		}
+		} while (ch != eof);
 		
 		jsonNumber.setValue(numberBuilder.toString());
 	}
@@ -490,8 +495,10 @@ public class JsonTextOutlineParser {
 	private String doJsonKey() throws JsonReaderException, JsonTextOutlineParserException {
 
 		StringBuilder keyBuilder = new StringBuilder();
-		while (true) {
-			char ch = parser.getNextChar();
+		
+		char ch;
+		do {
+			ch = parser.getNextChar();
 			
 			if (ch == eof) {
 				JsonError jsonError = new JsonError(parent, "Invalid JSON key, no closing \"");
@@ -505,7 +512,7 @@ public class JsonTextOutlineParser {
 			}
 			
 			break;
-		}
+		} while (ch != eof);
 		
 		return keyBuilder.toString();
 	}
