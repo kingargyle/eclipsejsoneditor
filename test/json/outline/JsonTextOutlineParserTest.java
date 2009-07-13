@@ -152,4 +152,17 @@ public class JsonTextOutlineParserTest {
 		Assert.assertEquals(1, top.getChildren().size());
 		
 	}
+	
+	@Test
+	public void testFile6() {
+		
+		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test6.json");
+		doc.addPositionCategory(JSON_ELEMENTS);
+		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
+		
+		JsonObject top = jtop.parse();
+		
+		Assert.assertEquals(1, top.getChildren().size());
+		
+	}
 }
