@@ -30,7 +30,6 @@ import static json.util.JsonCharUtility.u;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import json.JsonLog;
 import json.util.reader.JsonFileReader;
 import json.util.reader.JsonReaderException;
 
@@ -434,7 +433,7 @@ public class JsonTextValidator {
 			marker.setAttribute(KEY, loc.key);
 			marker.setAttribute(VIOLATION, violation);
 		} catch (CoreException e) {
-			JsonLog.logError(e);
+			//JsonLog.logError(e);
 		}
 	}
 	
@@ -444,7 +443,7 @@ public class JsonTextValidator {
 	 * @author Matt Garner
 	 *
 	 */
-	private class Location {
+	class Location {
 		
 		
 		public Location(IFile file, String key, int charStart, int charEnd) {
