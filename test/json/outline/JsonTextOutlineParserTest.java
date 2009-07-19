@@ -1,7 +1,7 @@
 package json.outline;
 
-import json.outline.elements.JsonObject;
 import json.outline.elements.JsonElement;
+import json.outline.elements.JsonObject;
 import json.util.FileToDocUtility;
 
 import org.eclipse.jface.text.IDocument;
@@ -12,7 +12,7 @@ import org.junit.Test;
 public class JsonTextOutlineParserTest {
 	
 	public final static String JSON_ELEMENTS = "__json_elements"; //$NON-NLS-1$
-	
+
 	@Before
 	public void onSetup() {
 		
@@ -188,7 +188,7 @@ public class JsonTextOutlineParserTest {
 		
 		JsonObject top = jtop.parse();
 		
-		Assert.assertEquals(1, top.getChildren().size());
+		Assert.assertEquals(2, top.getChildren().size());
 		
 	}
 }
