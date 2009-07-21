@@ -126,6 +126,7 @@ public class JsonTextOutlineParser {
 			// Check for empty object.
 			if (ch == closeCurly) {
 				parser.getNextClean();
+				parent = ((JsonElement)parent).getParent();
 				break;
 			}
 			
@@ -420,7 +421,7 @@ public class JsonTextOutlineParser {
 			
 			valueBuilder.append(ch);
 		} while (ch != eof);
-		
+
 		jsonString.setValue(valueBuilder.toString());
 	}
 	
