@@ -3,9 +3,10 @@
  */
 package json.outline;
 
-import json.outline.elements.JsonElement;
-import json.outline.elements.JsonObject;
-import json.outline.elements.JsonParent;
+import java.util.List;
+
+import json.model.jsonnode.JsonNode;
+import json.outline.node.JsonTreeNode;
 
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
@@ -25,12 +26,13 @@ public class JsonContentProvider implements ITreeContentProvider {
 	
 	protected IDocumentProvider fDocumentProvider;
 	protected Object fInput;
-	protected JsonObject rootObject;
+	protected JsonTreeNode rootObject;
 	public final static String JSON_ELEMENTS = "__json_elements"; //$NON-NLS-1$
 	protected IPositionUpdater fPositionUpdater= new DefaultPositionUpdater(JSON_ELEMENTS);
+	protected List<JsonNode> jsonNodes;
 	
 	protected void parse(IDocument document) {
-		rootObject = new JsonTextOutlineParser(document).parse();
+		rootObject = new JsonModelOutlineParser().mergeNodes(rootObject, jsonNodes);
 	}
 	
 	public JsonContentProvider(IDocumentProvider documentProvider) {
@@ -41,6 +43,11 @@ public class JsonContentProvider implements ITreeContentProvider {
 	public void setInput(Object input) {
 		this.fInput = input;
 	}
+	
+	public void setJsonNodes(List<JsonNode> jsonNodes) {
+		this.jsonNodes = jsonNodes;
+		rootObject = new JsonModelOutlineParser().mergeNodes(rootObject, jsonNodes);
+	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
@@ -49,8 +56,8 @@ public class JsonContentProvider implements ITreeContentProvider {
 		if (parentElement == fInput) {
 			return (rootObject != null) ? new Object[]{ rootObject } : new Object[0];
 		}
-		if (parentElement instanceof JsonElement) {
-			return ((JsonElement) parentElement).getChildren().toArray();
+		if (parentElement instanceof JsonTreeNode) {
+			return ((JsonTreeNode) parentElement).getChildren().toArray();
 		}
 		return new Object[0];
 	}
@@ -61,8 +68,8 @@ public class JsonContentProvider implements ITreeContentProvider {
 	public Object getParent(Object element) {
 		if (element == rootObject)
 			return fInput;
-		if (element instanceof JsonElement) {
-			return ((JsonElement) element).getParent();
+		if (element instanceof JsonTreeNode) {
+			return ((JsonTreeNode) element).getParent();
 		}
 		return null;
 	}
@@ -74,8 +81,8 @@ public class JsonContentProvider implements ITreeContentProvider {
 		if (element == fInput) {
 			return (rootObject != null) ? true : false;
 		}
-		if (element instanceof JsonParent) {
-			return ((JsonParent) element).hasChildren();
+		if (element instanceof JsonTreeNode) {
+			return ((JsonTreeNode) element).hasChildren();
 		}
 		
 		return false;
@@ -137,13 +144,13 @@ public class JsonContentProvider implements ITreeContentProvider {
 	 * @param length
 	 * @return
 	 */
-	public JsonElement findNearestElement(int start, int length) {
+	public JsonTreeNode findNearestElement(int start, int length) {
 		
 		if (rootObject == null) {
 			return null;
 		}
 		
-		return findNearestElement(rootObject, start, length);
+		return findNearestElement((JsonTreeNode)rootObject, start, length);
 	}
 	
 	/**
@@ -154,18 +161,18 @@ public class JsonContentProvider implements ITreeContentProvider {
 	 * @param length
 	 * @return
 	 */
-	private JsonElement findNearestElement(JsonElement parent, int start, int length) {
+	private JsonTreeNode findNearestElement(JsonTreeNode parent, int start, int length) {
 		
-		JsonElement previous = null;
+		JsonTreeNode previous = null;
 		boolean found = false;
 		
 		if (parent.getChildren().size() == 0) {
 			return parent;
 		}
 		
-		for (JsonElement jsonElement : parent.getChildren()) {
+		for (JsonTreeNode jsonTreeNode : parent.getChildren()) {
 			
-			if (start < jsonElement.getStart()) {
+			if (start < jsonTreeNode.getStart()) {
 				found = true;
 				if (previous != null) {
 					previous = findNearestElement(previous, start, length);
@@ -174,7 +181,7 @@ public class JsonContentProvider implements ITreeContentProvider {
 				}
 				break;
 			}
-			previous = jsonElement;
+			previous = jsonTreeNode;
 		}
 		
 		if(!found) {

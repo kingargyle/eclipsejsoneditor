@@ -1,7 +1,6 @@
 package json.outline;
 
 import json.outline.elements.JsonElement;
-import json.outline.elements.JsonObject;
 import json.util.FileToDocUtility;
 
 import org.eclipse.jface.text.IDocument;
@@ -30,7 +29,7 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(4, top.getChildren().size());
 		
@@ -46,7 +45,7 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(1, top.getChildren().size());
 		
@@ -77,7 +76,7 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(3, top.getChildren().size());
 		
@@ -110,7 +109,7 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(3, top.getChildren().size());
 		
@@ -147,7 +146,7 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(1, top.getChildren().size());
 		
@@ -160,7 +159,7 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(2, top.getChildren().size());
 		
@@ -173,7 +172,7 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(2, top.getChildren().size());
 		
@@ -186,9 +185,24 @@ public class JsonTextOutlineParserTest {
 		doc.addPositionCategory(JSON_ELEMENTS);
 		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
 		
-		JsonObject top = jtop.parse();
+		JsonElement top = (JsonElement) jtop.parse();
 		
 		Assert.assertEquals(2, top.getChildren().size());
 		
+	}
+	
+	@Test
+	public void testFile9() {
+		
+		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test9.json");
+		doc.addPositionCategory(JSON_ELEMENTS);
+		JsonTextOutlineParser jtop = new JsonTextOutlineParser(doc);
+		
+		JsonElement top = (JsonElement) jtop.parse();
+		
+		Assert.assertEquals(4, top.getChildren().size());
+		
+		JsonElement object = top.getChildren().get(2);
+		Assert.assertEquals(1, object.getChildren().size());
 	}
 }

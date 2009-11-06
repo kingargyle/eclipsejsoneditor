@@ -129,4 +129,17 @@ public class JsonReconcilingStrategyTest {
 		
 		Assert.assertEquals(1, jtop.fPositions.size());
 	}
+	
+	@Test
+	public void testFile9() {
+		
+		IDocument doc = FileToDocUtility.getDocument("./bin/json/outline/files/test9.json");
+		
+		JsonReconcilingStrategy jtop = new JsonReconcilingStrategy();
+		jtop.setDocument(doc);
+		
+		jtop.initialReconcile();
+		
+		Assert.assertEquals(2, jtop.fPositions.size());
+	}
 }

@@ -99,13 +99,13 @@ public class JsonReconcilingStrategy implements IReconcilingStrategy,
 
 			char current = parser.getNextClean();
 
-			if (current != openCurly) {
-				
+			if (current == openCurly) {
+				doJsonObject("", parser.getPosition());
+			} else if (current == openSquare) {
+				doJsonArray("", parser.getPosition());
+			} else {
 				throw new JsonReconcilerParserException();
 			}
-
-			doJsonObject("", parser.getPosition());
-
 
 		} catch (Exception e) {
 			//JsonLog.logError("Read exception: ", e);

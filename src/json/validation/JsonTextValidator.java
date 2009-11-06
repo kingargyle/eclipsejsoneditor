@@ -80,12 +80,13 @@ public class JsonTextValidator {
 
 			char current = parser.getNextClean();
 
-			if (current != openCurly) {
-				reportProblem("JSON should begin with {", new Location(parser.getIFile(),"", parser.getPosition(), parser.getPosition()),0, true);
+			if (current == openCurly) {
+				doJsonObject();
+			} else if (current == openSquare) {
+				doJsonArray();
+			} else {
+				reportProblem("JSON should begin with { or [", new Location(parser.getIFile(),"", parser.getPosition(), parser.getPosition()),0, true);
 			}
-
-			doJsonObject();
-
 
 		} catch (Exception e) {
 		//	JsonLog.logError("Read exception: ", e);

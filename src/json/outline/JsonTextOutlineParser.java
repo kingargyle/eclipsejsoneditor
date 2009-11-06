@@ -51,7 +51,7 @@ public class JsonTextOutlineParser {
 
 	private JsonReader parser;
 	
-	private JsonObject root;
+	private JsonParent root;
 	
 	private JsonParent parent;
 	
@@ -73,22 +73,24 @@ public class JsonTextOutlineParser {
 	 *  
 	 * @return
 	 */
-	public JsonObject parse() {
-
+	public JsonParent parse() {
+		
+		//System.out.println("Parse Text");
 		try {
 
 			char current = parser.getNextClean();
 
-			if (current != openCurly) {
-				JsonError jsonError = new JsonError(parent, "JSON should begin with {");
+			if (current == openCurly) {
+				doJsonObject("", parser.getPosition());
+			} else if (current == openSquare){
+				doJsonArray("", parser.getPosition());
+			} else {
+				JsonError jsonError = new JsonError(parent, "JSON should begin with { or [");
 				root = new JsonObject(parent, "");
 				root.addChild(jsonError);
 				throw new JsonTextOutlineParserException();
 			}
-
-			doJsonObject("", parser.getPosition());
-
-
+			
 		} catch (Exception e) {
 			//JsonLog.logError("Read exception: ", e);
 		}
@@ -198,8 +200,14 @@ public class JsonTextOutlineParser {
 	private void doJsonArray(String key, int startPos) throws JsonReaderException, JsonTextOutlineParserException, BadLocationException, BadPositionCategoryException {
 		
 		JsonArray jsonArray = new JsonArray(parent, key);
-		parent.addChild(jsonArray);
-		parent = jsonArray;
+		if (root == null) {
+			root = jsonArray;
+			parent = root;
+		} else {
+			parent.addChild(jsonArray);
+			parent = jsonArray;
+		}
+		
 		jsonArray.setPosition(startPos, parser.getPosition() - startPos + 1, doc);
 		
 		char ch;

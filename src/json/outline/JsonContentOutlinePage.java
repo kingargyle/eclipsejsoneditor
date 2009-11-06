@@ -4,7 +4,10 @@
 package json.outline;
 
 
-import json.outline.elements.JsonElement;
+import java.util.List;
+
+import json.model.jsonnode.JsonNode;
+import json.outline.node.JsonTreeNode;
 
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
@@ -85,14 +88,14 @@ public class JsonContentOutlinePage extends ContentOutlinePage implements ISelec
 		if (selection.isEmpty())
 			fTextEditor.resetHighlightRange();
 		else {
-			JsonElement jsonElement = (JsonElement) ((IStructuredSelection) selection).getFirstElement();
-			if (jsonElement.isTextSelection()) {
-				jsonElement.setTextSelection(false);
+			JsonTreeNode jsonTreeNode = (JsonTreeNode) ((IStructuredSelection) selection).getFirstElement();
+			if (jsonTreeNode.isTextSelection()) {
+				jsonTreeNode.setTextSelection(false);
 				return;
 			}
 			
-			int start= jsonElement.getStart();
-			int length= jsonElement.getLength();
+			int start= jsonTreeNode.getStart();
+			int length= jsonTreeNode.getLength();
 			try {
 				fTextEditor.selectAndReveal(start, length);
 			} catch (IllegalArgumentException x) {
@@ -140,7 +143,7 @@ public class JsonContentOutlinePage extends ContentOutlinePage implements ISelec
 			int start = textSelection.getOffset();
 			int length = textSelection.getLength();
 			
-			JsonElement element = fContentProvider.findNearestElement(start, length);
+			JsonTreeNode element = fContentProvider.findNearestElement(start, length);
 			if (element != null) {
 				element.setTextSelection(true);
 				getTreeViewer().reveal(element);
@@ -151,5 +154,16 @@ public class JsonContentOutlinePage extends ContentOutlinePage implements ISelec
 		
 	}
 	
-	
+	public void setJsonNodes(List<JsonNode> jsonNodes) {
+		fContentProvider.setJsonNodes(jsonNodes);
+		if (fContentProvider.rootObject == null) {
+			update();
+		} else {
+			TreeViewer viewer= getTreeViewer();
+
+			if (viewer != null) {
+				viewer.refresh();
+			}
+		}
+	}
 }

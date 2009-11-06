@@ -1,7 +1,6 @@
 package json;
 
 import json.outline.JsonTextOutlineParserTest;
-import json.text.JsonReconcilingStrategyTest;
 import json.validation.JsonTextValidationTest;
 
 import org.junit.runner.RunWith;
@@ -11,7 +10,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 JsonTextOutlineParserTest.class,
-JsonReconcilingStrategyTest.class,
+json.text.JsonReconcilingStrategyTest.class,
+json.model.JsonReconcilingStrategyTest.class,
 JsonTextValidationTest.class})
 public class AllTests {
 

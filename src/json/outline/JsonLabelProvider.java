@@ -3,7 +3,7 @@
  */
 package json.outline;
 
-import json.outline.elements.JsonElement;
+import json.outline.node.JsonTreeNode;
 
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.JFaceResources;
@@ -46,8 +46,8 @@ public class JsonLabelProvider extends ColumnLabelProvider  implements IStyledLa
 	 * Subclasses may override.
 	 */
 	public Image getImage(Object element) {
-		if (element instanceof JsonElement) {
-			JsonElement node = (JsonElement) element;
+		if (element instanceof JsonTreeNode) {
+			JsonTreeNode node = (JsonTreeNode) element;
 			return node.getImage();
 		}
 		return null;
@@ -58,8 +58,8 @@ public class JsonLabelProvider extends ColumnLabelProvider  implements IStyledLa
 	 */
 	public StyledString getStyledText(Object element) {
 		StyledString styledString = new StyledString();
-		if (element instanceof JsonElement) {
-			JsonElement node = (JsonElement) element;
+		if (element instanceof JsonTreeNode) {
+			JsonTreeNode node = (JsonTreeNode) element;
 			return node.getStyledString();
 		}
 		return styledString;

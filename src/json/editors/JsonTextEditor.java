@@ -1,9 +1,10 @@
 package json.editors;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import json.JsonEditorPlugin;
+import json.model.jsonnode.JsonNode;
 import json.outline.JsonContentOutlinePage;
 
 import org.eclipse.core.runtime.CoreException;
@@ -13,7 +14,6 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.DefaultCharacterPairMatcher;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
-import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
@@ -32,7 +32,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
  */
 public class JsonTextEditor extends TextEditor {
 	
-	private SourceViewerConfiguration viewerConfiguration;
+	private JsonSourceViewerConfiguration viewerConfiguration;
 	
 	protected final static char[] PAIRS= { '{', '}', '[', ']' };
 	
@@ -165,7 +165,7 @@ public class JsonTextEditor extends TextEditor {
 		return viewer;
 	}
 	
-	public void updateFoldingStructure(ArrayList<Position> positions)
+	public void updateFoldingStructure(List<Position> positions)
 	{
 		Annotation[] annotations = new Annotation[positions.size()];
 		
@@ -188,5 +188,10 @@ public class JsonTextEditor extends TextEditor {
 	public JsonContentOutlinePage getFOutlinePage() {
 		return fOutlinePage;
 	}
-
+	
+	public void updateContentOutlinePage(List<JsonNode> jsonNodes) {
+		if (fOutlinePage != null) {
+			fOutlinePage.setJsonNodes(jsonNodes);
+		}
+	}
 }

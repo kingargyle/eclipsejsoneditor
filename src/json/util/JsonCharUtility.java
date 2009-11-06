@@ -1,5 +1,9 @@
 package json.util;
 
+import json.model.node.Type;
+
+
+
 /**
  * Utility class to determine if a character is a special Json character.
  * 
@@ -62,5 +66,50 @@ public final class JsonCharUtility {
 			return true;
 		}
 		return false;
+	}
+	
+	public static boolean isJsonChar(char ch, char previous) {
+		if (ch == comma || ch == openCurly || ch == closeCurly || 
+				ch == openSquare || ch == closeSquare || ch == colon ||
+				(ch == quote && previous != slash)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static Type getJsonCharType(char ch) {
+		
+		if (ch == comma) {
+			
+			return Type.Comma;  
+		}
+		
+		if (ch == openCurly) {
+			return Type.OpenObject;
+		}
+		
+		if (ch == closeCurly) {
+			return Type.CloseObject;
+		}
+				
+		if (ch == openSquare) {
+			return Type.OpenArray;
+		}
+		
+		if (ch == closeSquare) {
+			return Type.CloseArray;
+		}
+		 
+		
+		if (ch == colon) {	
+			return Type.Colon;
+		}
+		
+		if (ch == quote) {	
+			return Type.Quote;
+		}
+		
+		return null;
 	}
 }

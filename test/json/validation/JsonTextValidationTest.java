@@ -168,4 +168,22 @@ public class JsonTextValidationTest {
 		jtop.parse();
 
 	}
+	
+	@Test
+	public void testFile9() throws Exception {
+		
+		File file = new File("./bin/json/outline/files/test9.json");
+		
+		JsonTextValidator jtop = new JsonTextValidator(file) {
+			
+			@Override
+			public void reportProblem(String msg, Location loc, int violation, boolean isError) {
+				
+				Assert.fail();
+			}
+		};
+		
+		jtop.parse();
+
+	}
 }
